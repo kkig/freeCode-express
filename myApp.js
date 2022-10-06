@@ -40,4 +40,22 @@ app.get('/json', function (req, res) {
   });
 });
 
+// Chain middleware and get time
+function middleware(req, res, next) {
+  req.time = new Date().toString();
+  console.log(req.ip);
+
+  // Block the chain
+  // if (req.ip === '__YOUR_IP') {
+  //   res.send('Block the chain!');
+  // } else {
+  //   next();
+  // }
+  next();
+}
+
+app.get('/now', middleware, (req, res) => {
+  res.send({time: req.time});
+});
+
 module.exports = app;
