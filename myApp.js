@@ -67,4 +67,15 @@ app.get('/:word/echo', function (req, res) {
   res.send({echo: word});
 });
 
+//
+// Get Query String Param from client
+// Chain different verb handlers on the same path route
+app
+  .route('/name')
+  .get(function (req, res) {
+    const nameStr = req.query.first + ' ' + req.query.last;
+    res.send({name: nameStr});
+  })
+  .post();
+
 module.exports = app;
