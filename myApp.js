@@ -77,14 +77,23 @@ app.get('/:word/echo', function (req, res) {
 });
 
 //
-// Get Query String Param from client
+// Get data with GET request using Query String Param
+// OR
+// Get data with POST request
 // Chain different verb handlers on the same path route
 app
   .route('/name')
   .get(function (req, res) {
+    // Get data from Query Param using 'req.query'
+    // (ex. https://example.com?first=John&last=Doe)
     const nameStr = req.query.first + ' ' + req.query.last;
     res.send({name: nameStr});
   })
-  .post();
+  .post(function (req, res) {
+    // Get data from POST req using 'req.body'
+    // (Get from payload of req)
+    const nameStr = req.body.first + ' ' + req.body.last;
+    res.send({name: nameStr});
+  });
 
 module.exports = app;
