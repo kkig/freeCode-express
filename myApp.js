@@ -3,7 +3,18 @@ require('dotenv').config();
 let express = require('express');
 let app = express();
 
-console.log('Hello World');
+// Mount middleware to serve static assets
+// app.use() will be executed for all the requests because default path is "/".
+app.use('/public', express.static(__dirname + '/public'));
+
+// Get the request method(http verb), the relative route path, and the caller’s ip
+app.use(function (req, res, next) {
+  let string = req.method + ' ' + req.path + ' - ' + req.ip;
+  console.log(string);
+
+  // Call next() when not responding to avoid server being stack
+  next();
+});
 
 // app.get('/', function (req, res) {
 //   res.send('Hello Express');
@@ -28,8 +39,5 @@ app.get('/json', function (req, res) {
     message: response,
   });
 });
-
-// Mount middleware to serve static assets
-app.use('/public', express.static(__dirname + '/public'));
 
 module.exports = app;
