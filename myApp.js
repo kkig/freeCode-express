@@ -1,4 +1,8 @@
+// For .env file
 require('dotenv').config();
+
+// Body parser for POST request
+const bodyParser = require('body-parser');
 
 let express = require('express');
 let app = express();
@@ -17,6 +21,11 @@ app.use(function (req, res, next) {
   next();
 });
 
+//
+// Mount Middleware before using it
+app.use(bodyParser.urlencoded({extended: false}));
+
+//
 // app.get('/', function (req, res) {
 //   res.send('Hello Express');
 // });
