@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 let express = require('express');
 let app = express();
 
@@ -13,7 +15,18 @@ app.get('/', function (req, res) {
 });
 
 app.get('/json', function (req, res) {
-  res.json({message: 'Hello json'});
+  const resString = 'Hello json';
+  let response;
+
+  if (process.env.MESSAGE_STYLE === 'uppercase') {
+    response = resString.toUpperCase();
+  } else {
+    response = resString;
+  }
+
+  res.json({
+    message: response,
+  });
 });
 
 // Mount middleware to serve static assets
